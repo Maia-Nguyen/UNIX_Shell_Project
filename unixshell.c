@@ -42,6 +42,9 @@ void readToken(char in[], char *args[],int *isAmp) {
     //read user input
     length = read(STDIN_FILENO, in, MAX_LINE);
 
+    if(strcmp(args[0], "exit") == 0) // quit
+            return 0;
+
     //return error if length < 0
     next = -1;
     if (length == 0) {
@@ -89,11 +92,16 @@ void readToken(char in[], char *args[],int *isAmp) {
 
     //check to see if user inputed the history command and if there is a command history
     if(strcmp(args[0],"history") == 0){
-    if(commandNum>0){
-        showHistory();
-        } else{
-            printf("\nNo Commands in history\n");
-            }
+        if(commandNum>0){
+            showHistory();
+        } else {
+            printf("No Commands in history\n");
+        }
+    }
+
+    //check if user inputed exit command
+    if(strcmp(args[0],"exit") == 0){
+        exit(0);
     }
 
     //Check to see if '!' is inputed
@@ -142,7 +150,7 @@ void readToken(char in[], char *args[],int *isAmp) {
 }
 
 int main(void){
-    char in[MAX_LINE]; //array to store user inpute
+    char in[MAX_LINE]; //array to store user input
     char *args[MAX_LINE/2+1];
     int isAmp;        //is an ampersand in command
     int loopCount;    //times looped
